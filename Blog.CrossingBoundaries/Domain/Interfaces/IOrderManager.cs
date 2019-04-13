@@ -5,6 +5,6 @@ namespace Blog.CrossingBoundaries.Domain.Interfaces
 {
     public interface IOrderManager
     {
-        IQueryable<OrderModel> SelectOrders();
+        IQueryable<OrderItemModel> SelectOrderItems();
     }
 }

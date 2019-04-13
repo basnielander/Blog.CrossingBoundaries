@@ -18,13 +18,12 @@ namespace Blog.CrossingBoundaries.Data.Repositories
             this.mapper = mapper;
         }
 
-        public IQueryable<OrderModel> SelectOrders()
+        public IQueryable<OrderItemModel> SelectOrderItems()
         {
-            var orderEntities = dbContext.Orders                            
-                                .Include("OrderItems")
-                                .Include("Customer");
+            var orderEntities = dbContext.OrderItems
+                            .Include("Order.Customer");
                             
-            var orderItems = mapper.Map<List<OrderModel>>(orderEntities);
+            var orderItems = mapper.Map<List<OrderItemModel>>(orderEntities);
             return orderItems.AsQueryable();
         }
     }

@@ -13,9 +13,9 @@ namespace Blog.CrossingBoundaries.Domain.Managers
             this.repository = repository;
         }
 
-        public IQueryable<OrderModel> SelectOrders()
+        public IQueryable<OrderItemModel> SelectOrderItems()
         {
-            return repository.SelectOrders();
+            return repository.SelectOrderItems();
         }
     }
 }

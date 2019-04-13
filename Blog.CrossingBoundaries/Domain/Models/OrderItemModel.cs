@@ -10,5 +10,7 @@
 
         public decimal Price { get; set; }
 
+        public OrderModel Order { get; set; }
+
     }
 }

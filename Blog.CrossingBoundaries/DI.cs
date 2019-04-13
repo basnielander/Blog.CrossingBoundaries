@@ -3,6 +3,8 @@ using Blog.CrossingBoundaries.Data;
 using Blog.CrossingBoundaries.Data.Repositories;
 using Blog.CrossingBoundaries.Domain.Interfaces;
 using Blog.CrossingBoundaries.Domain.Managers;
+using Blog.CrossingBoundaries.UI;
+using Blog.CrossingBoundaries.UI.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,9 +32,10 @@ namespace Blog.CrossingBoundaries
             _serviceProvider = new ServiceCollection()
                 .AddLogging()
                 .AddAutoMapper()
-                .AddDbContext<DatabaseContext>(o => o.UseLoggerFactory(MyLoggerFactory).UseSqlServer(Configuration.GetConnectionString("OrdersDatabase")))
+                .AddDbContext<DatabaseContext>(o => o.UseSqlServer(Configuration.GetConnectionString("OrdersDatabase"))) //.UseLoggerFactory(MyLoggerFactory)
                 .AddSingleton<IOrderRepository, OrderRepository>()
                 .AddSingleton<IOrderManager, OrderManager>()
+                .AddSingleton<IOrderController, OrderController>()                
                 .BuildServiceProvider();
 
             var logger = _serviceProvider.GetService<ILoggerFactory>()
