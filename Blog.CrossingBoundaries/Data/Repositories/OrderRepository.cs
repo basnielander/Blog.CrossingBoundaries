@@ -22,15 +22,14 @@ namespace Blog.CrossingBoundaries.Data.Repositories
             this.mapper = mapper;
         }
 
-        public IQueryable<OrderModel> FindOrders(string customerName, string productName)
+        public IQueryable<OrderItemModel> FindOrderItems(string customerName, string productName)
         {
-            var orderEntities = dbContext.Orders                            
-                            .Include("OrderItems")
-                            .Include("Customer")
-                            .Where(order => (string.IsNullOrWhiteSpace(customerName) || order.Customer.Name.Contains(customerName)) &&
-                                            (string.IsNullOrWhiteSpace(productName) || order.OrderItems.Any(orderItem => orderItem.ProductName.Contains(productName))));
+            var orderEntities = dbContext.OrderItems
+                            .Include("Order.Customer")
+                            .Where(orderItem => (string.IsNullOrWhiteSpace(customerName) || orderItem.Order.Customer.Name.Contains(customerName)) &&
+                                                (string.IsNullOrWhiteSpace(productName) || orderItem.ProductName.Contains(productName)));
                             
-            var orderItems = mapper.Map<List<OrderModel>>(orderEntities);
+            var orderItems = mapper.Map<List<OrderItemModel>>(orderEntities);
             return orderItems.AsQueryable();
         }
     }

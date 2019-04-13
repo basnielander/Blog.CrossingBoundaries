@@ -16,9 +16,9 @@ namespace Blog.CrossingBoundaries.Domain.Managers
             this.repository = repository;
         }
 
-        public IQueryable<OrderModel> FindOrders(string customerName, string productName)
+        public IQueryable<OrderItemModel> FindOrderItems(string customerName, string productName)
         {
-            return repository.FindOrders(customerName, productName);
+            return repository.FindOrderItems(customerName, productName);
         }
     }
 }
