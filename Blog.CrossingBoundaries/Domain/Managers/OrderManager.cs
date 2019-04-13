@@ -1,9 +1,6 @@
 ﻿using Blog.CrossingBoundaries.Domain.Interfaces;
 using Blog.CrossingBoundaries.Domain.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Blog.CrossingBoundaries.Domain.Managers
 {
@@ -16,9 +13,9 @@ namespace Blog.CrossingBoundaries.Domain.Managers
             this.repository = repository;
         }
 
-        public IQueryable<OrderModel> FindOrders(string customerName, string productName)
+        public IQueryable<OrderModel> SelectOrders()
         {
-            return repository.FindOrders(customerName, productName);
+            return repository.SelectOrders();
         }
     }
 }

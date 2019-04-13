@@ -1,13 +1,9 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using Blog.CrossingBoundaries.Data.Entities;
 using Blog.CrossingBoundaries.Domain.Interfaces;
 using Blog.CrossingBoundaries.Domain.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Blog.CrossingBoundaries.Data.Repositories
 {
@@ -22,13 +18,11 @@ namespace Blog.CrossingBoundaries.Data.Repositories
             this.mapper = mapper;
         }
 
-        public IQueryable<OrderModel> FindOrders(string customerName, string productName)
+        public IQueryable<OrderModel> SelectOrders()
         {
             var orderEntities = dbContext.Orders                            
-                            .Include("OrderItems")
-                            .Include("Customer")
-                            .Where(order => (string.IsNullOrWhiteSpace(customerName) || order.Customer.Name.Contains(customerName)) &&
-                                            (string.IsNullOrWhiteSpace(productName) || order.OrderItems.Any(orderItem => orderItem.ProductName.Contains(productName))));
+                                .Include("OrderItems")
+                                .Include("Customer");
                             
             var orderItems = mapper.Map<List<OrderModel>>(orderEntities);
             return orderItems.AsQueryable();

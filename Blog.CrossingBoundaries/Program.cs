@@ -1,6 +1,7 @@
 ﻿using Blog.CrossingBoundaries.Domain.Interfaces;
 using Newtonsoft.Json;
 using System;
+using System.Linq;
 
 namespace Blog.CrossingBoundaries
 {
@@ -19,9 +20,12 @@ namespace Blog.CrossingBoundaries
                 Console.WriteLine("Product query: ");
                 string productQuery = Console.ReadLine();
 
-                var results = manager.FindOrders(customerQuery, productQuery);
+                var results = manager.SelectOrders();
 
-                var resultsStr = JsonConvert.SerializeObject(results, Newtonsoft.Json.Formatting.Indented);
+                var filteredResults = results.Where(order => (string.IsNullOrWhiteSpace(customerQuery) || order.Customer.Name.Contains(customerQuery)) &&
+                                                             (string.IsNullOrWhiteSpace(productQuery) || order.OrderItems.Any(orderItem => orderItem.ProductName.Contains(productQuery))));
+
+                var resultsStr = JsonConvert.SerializeObject(filteredResults, Formatting.Indented);
                 Console.WriteLine(resultsStr);
                 Console.WriteLine();
             }
