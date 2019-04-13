@@ -3,6 +3,7 @@ using Blog.CrossingBoundaries.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace Blog.CrossingBoundaries.Domain.Managers
@@ -16,9 +17,11 @@ namespace Blog.CrossingBoundaries.Domain.Managers
             this.repository = repository;
         }
 
-        public IQueryable<OrderItemModel> FindOrderItems(string customerName, string productName)
+        public IQueryable<OrderItemModel> FindOrderItems(Expression<Func<OrderItemModel, bool>> filter)
         {
-            return repository.FindOrderItems(customerName, productName);
+            var unfilteredOrderItems = repository.FindOrderItems();
+
+            return unfilteredOrderItems.Where(filter);
         }
     }
 }

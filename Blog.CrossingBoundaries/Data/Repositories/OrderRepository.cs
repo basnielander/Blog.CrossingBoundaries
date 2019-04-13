@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.Extensions.ExpressionMapping;
 using AutoMapper.QueryableExtensions;
 using Blog.CrossingBoundaries.Data.Entities;
 using Blog.CrossingBoundaries.Domain.Interfaces;
@@ -22,14 +23,12 @@ namespace Blog.CrossingBoundaries.Data.Repositories
             this.mapper = mapper;
         }
 
-        public IQueryable<OrderItemModel> FindOrderItems(string customerName, string productName)
+        public IQueryable<OrderItemModel> FindOrderItems()
         {
-            var orderEntities = dbContext.OrderItems
+            var orderItems = dbContext.OrderItems
                             .Include("Order.Customer")
-                            .Where(orderItem => (string.IsNullOrWhiteSpace(customerName) || orderItem.Order.Customer.Name.Contains(customerName)) &&
-                                                (string.IsNullOrWhiteSpace(productName) || orderItem.ProductName.Contains(productName)));
+                            .UseAsDataSource(mapper).For<OrderItemModel>();
                             
-            var orderItems = mapper.Map<List<OrderItemModel>>(orderEntities);
             return orderItems.AsQueryable();
         }
     }
