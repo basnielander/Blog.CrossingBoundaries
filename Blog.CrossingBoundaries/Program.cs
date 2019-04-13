@@ -1,4 +1,6 @@
 ﻿using Blog.CrossingBoundaries.Domain.Interfaces;
+using Blog.CrossingBoundaries.UI;
+using Blog.CrossingBoundaries.UI.Interfaces;
 using Newtonsoft.Json;
 using System;
 
@@ -10,7 +12,7 @@ namespace Blog.CrossingBoundaries
         {
             Console.WriteLine("Hello World!");
 
-            var manager = DI.GetService<IOrderManager>();
+            var controller = DI.GetService<IOrderController>();
 
             while (true)
             {
@@ -19,9 +21,9 @@ namespace Blog.CrossingBoundaries
                 Console.WriteLine("Product query: ");
                 string productQuery = Console.ReadLine();
 
-                var results = manager.FindOrders(customerQuery, productQuery);
+                var results = controller.FindOrders(customerQuery, productQuery);
 
-                var resultsStr = JsonConvert.SerializeObject(results, Newtonsoft.Json.Formatting.Indented);
+                var resultsStr = JsonConvert.SerializeObject(results, Formatting.Indented);
                 Console.WriteLine(resultsStr);
                 Console.WriteLine();
             }
