@@ -19,7 +19,7 @@ namespace Blog.CrossingBoundaries.Domain.Managers
 
         public IQueryable<OrderItemModel> FindOrderItems(Expression<Func<OrderItemModel, bool>> filter)
         {
-            var unfilteredOrderItems = repository.FindOrderItems();
+            var unfilteredOrderItems = repository.SelectOrderItems();
 
             return unfilteredOrderItems.Where(filter);
         }

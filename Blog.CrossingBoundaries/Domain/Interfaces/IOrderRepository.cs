@@ -5,6 +5,6 @@ namespace Blog.CrossingBoundaries.Domain.Interfaces
 {
     public interface IOrderRepository
     {
-        IQueryable<OrderItemModel> FindOrderItems();
+        IQueryable<OrderItemModel> SelectOrderItems();
     }
 }

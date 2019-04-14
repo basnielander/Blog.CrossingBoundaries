@@ -23,7 +23,12 @@ namespace Blog.CrossingBoundaries.Data.Repositories
             this.mapper = mapper;
         }
 
-        public IQueryable<OrderItemModel> FindOrderItems()
+        /// <summary>
+        /// Select orderitems from a database, including order and customer data,
+        /// but now using UseAsDataSource(IMapper)
+        /// </summary>
+        /// <returns></returns>
+        public IQueryable<OrderItemModel> SelectOrderItems()
         {
             var orderItems = dbContext.OrderItems
                             .Include("Order.Customer")
