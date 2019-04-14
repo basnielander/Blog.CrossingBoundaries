@@ -19,7 +19,7 @@ namespace Blog.CrossingBoundaries.Data.Repositories
         }
 
         /// <summary>
-        /// Select orderitems from the database, inclusing order and customer data
+        /// Select orderitems from the database, including order and customer data
         /// </summary>
         /// <returns></returns>
         public IQueryable<OrderItemModel> SelectOrderItems()
