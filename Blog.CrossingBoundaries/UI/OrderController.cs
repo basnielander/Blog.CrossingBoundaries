@@ -18,6 +18,12 @@ namespace Blog.CrossingBoundaries.UI
             this.mapper = mapper;
         }
 
+        /// <summary>
+        /// FindOrderItems() method in the UI layer, calling the OrderManager in the Domain layer
+        /// </summary>
+        /// <param name="customerName"></param>
+        /// <param name="productName"></param>
+        /// <returns></returns>
         public IEnumerable<OrderItemViewModel> FindOrderItems(string customerName, string productName)
         {
             var orderModelItems = orderManager.SelectOrderItems();

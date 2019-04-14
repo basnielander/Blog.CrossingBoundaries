@@ -18,10 +18,14 @@ namespace Blog.CrossingBoundaries.Data.Repositories
             this.mapper = mapper;
         }
 
+        /// <summary>
+        /// Select orderitems from the database, inclusing order and customer data
+        /// </summary>
+        /// <returns></returns>
         public IQueryable<OrderItemModel> SelectOrderItems()
         {
             var orderEntities = dbContext.OrderItems
-                            .Include("Order.Customer");
+                                            .Include("Order.Customer");
                             
             var orderItems = mapper.Map<List<OrderItemModel>>(orderEntities);
             return orderItems.AsQueryable();
