@@ -7,6 +7,6 @@ namespace Blog.CrossingBoundaries.Domain.Interfaces
 {
     public interface IOrderManager
     {
-        IQueryable<OrderItemModel> FindOrderItems(Expression<Func<OrderItemModel, bool>> filter);
+        IQueryable<OrderItemModel> FindOrderItems(string customerName, string productName);
     }
 }

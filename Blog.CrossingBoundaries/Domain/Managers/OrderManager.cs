@@ -17,11 +17,19 @@ namespace Blog.CrossingBoundaries.Domain.Managers
             this.repository = repository;
         }
 
-        public IQueryable<OrderItemModel> FindOrderItems(Expression<Func<OrderItemModel, bool>> filter)
+        /// <summary>
+        /// The FindOrderItems method applies a Where-statement on the IQueryable retrieved from the data layer. 
+        /// </summary>
+        /// <param name="customerName"></param>
+        /// <param name="productName"></param>
+        /// <returns></returns>
+        public IQueryable<OrderItemModel> FindOrderItems(string customerName, string productName)
         {
-            var unfilteredOrderItems = repository.SelectOrderItems();
+            var orderItems = repository.SelectOrderItems()
+                                        .Where(orderItem => (customerName == null || orderItem.Order.Customer.Name.Contains(customerName)) &&
+                                                            (productName == null || orderItem.ProductName.Contains(productName)));
 
-            return unfilteredOrderItems.Where(filter);
+            return orderItems;
         }
     }
 }

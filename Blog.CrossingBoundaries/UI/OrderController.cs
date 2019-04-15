@@ -21,35 +21,17 @@ namespace Blog.CrossingBoundaries.UI
             this.mapper = mapper;
         }
 
+        /// <summary>
+        /// FindOrderItems() method in the UI layer, calling the OrderManager in the Domain layer
+        /// </summary>
+        /// <param name="customerName"></param>
+        /// <param name="productName"></param>
+        /// <returns></returns>
         public IEnumerable<OrderItemViewModel> FindOrders(string customerName, string productName)
         {
-            var filterExpression = GetFilterExpression(customerName, productName);
-
-            var orderModelItems = orderManager.FindOrderItems(filterExpression);
+            var orderModelItems = orderManager.FindOrderItems(customerName, productName);
 
             return mapper.Map<List<OrderItemViewModel>>(orderModelItems);
-        }
-
-        private Expression<Func<OrderItemModel, bool>> GetFilterExpression(string customerName, string productName)
-        {
-            var parameterExpression = FilterHelper.GetParameterExpression<OrderItemViewModel>();
-
-            var customerExpression = string.IsNullOrWhiteSpace(customerName) ? null : FilterHelper.CreateExpression<OrderItemViewModel>(nameof(OrderItemViewModel.CustomerName), customerName, parameterExpression);
-            var productExpression = string.IsNullOrWhiteSpace(productName) ? null : FilterHelper.CreateExpression<OrderItemViewModel>(nameof(OrderItemViewModel.ProductName), productName, parameterExpression);
-
-            Expression<Func<OrderItemViewModel, bool>> resultingExpression = null;
-
-            if (customerExpression != null && productExpression != null)
-            {
-                var combination = Expression.AndAlso(customerExpression, productExpression);
-                resultingExpression = Expression.Lambda<Func<OrderItemViewModel, bool>>(combination, parameterExpression);
-            }
-            else
-            {
-                resultingExpression = customerExpression ?? productExpression ?? Expression.Lambda<Func<OrderItemViewModel, bool>>(Expression.Constant(true), parameterExpression);
-            }
-
-            return mapper.MapExpression<Expression<Func<OrderItemModel, bool>>>(resultingExpression);
-        }
+        }        
     }
 }

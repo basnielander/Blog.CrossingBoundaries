@@ -23,6 +23,7 @@ namespace Blog.CrossingBoundaries
                                                                       .Build();
 
         public static readonly LoggerFactory MyLoggerFactory = new LoggerFactory(new[] { new ConsoleLoggerProvider((_, __) => true, true) });
+
         static DI()
         {
             var builder = new ConfigurationBuilder()
@@ -32,7 +33,7 @@ namespace Blog.CrossingBoundaries
             _serviceProvider = new ServiceCollection()
                 .AddLogging()
                 .AddAutoMapper()
-                .AddDbContext<DatabaseContext>(o => o.UseSqlServer(Configuration.GetConnectionString("OrdersDatabase"))) //.UseLoggerFactory(MyLoggerFactory)
+                .AddDbContext<DatabaseContext>(o => o.UseLoggerFactory(MyLoggerFactory).UseSqlServer(Configuration.GetConnectionString("OrdersDatabase"))) //
                 .AddSingleton<IOrderRepository, OrderRepository>()
                 .AddSingleton<IOrderManager, OrderManager>()
                 .AddSingleton<IOrderController, OrderController>()                
